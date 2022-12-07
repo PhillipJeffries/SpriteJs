@@ -19,8 +19,9 @@ let y = 0
 //frame position
 
 let frameX = 0
-let frameY = 4
-
+let frameY = 0
+let gameFrame = 0
+let staggerFrames = 2
 
 const spriteWidth = 6876 / 12
 const spriteHeight = 5230 / 10
@@ -57,22 +58,30 @@ const checkDirection = (x, canvasWidth) => {
 
 
 
-
+//animation loop
 const animate = () => {
     
     c.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 
     //red square
-    c.fillRect(x, y, 50, 50)
-    c.fillStyle = 'red'
+    // c.fillRect(x, y, 50, 50)
+    // c.fillStyle = 'red'
 
-    checkDirection(x, CANVAS_WIDTH).right ?  x++ : x-=1
+    // checkDirection(x, CANVAS_WIDTH).right ?  x++ : x-=1
 
+    //f(imageSrc, spritePositionX, spritePositionY, spriteWidth, spriteHeight, positionX, positionY, width, height)
     c.drawImage(playerImage, frameX * spriteWidth, frameY * spriteHeight, spriteWidth, spriteHeight, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
-    if(frameX < 10) frameX++ 
-    else frameX=0
-    
 
+    // speed definition
+    if(gameFrame % staggerFrames === 0){
+        //sprite loop
+        const frameLimit = 6
+        if(frameX < frameLimit) frameX++ 
+        else frameX=0
+
+    }
+    
+    gameFrame++
 
     
     window.requestAnimationFrame(animate)
