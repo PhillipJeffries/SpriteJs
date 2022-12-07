@@ -17,14 +17,14 @@ let x = -objectWidth
 let y = 0
 
 //frame position
+const spriteWidth = 6876 / 12
+const spriteHeight = 5230 / 10
 
 let frameX = 0
 let frameY = 0
 let gameFrame = 0
-let staggerFrames = 2
+let staggerFrames = 5 //velocity
 
-const spriteWidth = 6876 / 12
-const spriteHeight = 5230 / 10
 
 
 const c = canvas.getContext('2d')
@@ -34,25 +34,25 @@ playerImage.src = "shadow_dog.png"
 
 
 
-let direction = {left: false, right: false}
+// let direction = {left: false, right: false}
 
-const checkDirection = (x, canvasWidth) => {
+// const checkDirection = (x, canvasWidth) => {
     
-    //if true -> if false <-
-    // let direction = {left: false, right: false}
-    if(x === canvasWidth) {
-        direction.left = true
-        direction.right = false
+//     //if true -> if false <-
+//     // let direction = {left: false, right: false}
+//     if(x === canvasWidth) {
+//         direction.left = true
+//         direction.right = false
       
-    }
-    if(x === -objectWidth){
-        direction.right  = true
-        direction.left = false
+//     }
+//     if(x === -objectWidth){
+//         direction.right  = true
+//         direction.left = false
        
-    } 
+//     } 
 
-    return direction
-}
+//     return direction
+// }
 
 
 
@@ -69,17 +69,24 @@ const animate = () => {
 
     // checkDirection(x, CANVAS_WIDTH).right ?  x++ : x-=1
 
+    let position = Math.floor(gameFrame/staggerFrames) % 7
+    frameX = spriteWidth * position
+    c.drawImage(playerImage, frameX, frameY * spriteHeight, spriteWidth, spriteHeight, 0, 0, spriteWidth, spriteHeight)
+
+
     //f(imageSrc, spritePositionX, spritePositionY, spriteWidth, spriteHeight, positionX, positionY, width, height)
-    c.drawImage(playerImage, frameX * spriteWidth, frameY * spriteHeight, spriteWidth, spriteHeight, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
+    // c.drawImage(playerImage, frameX * spriteWidth, frameY * spriteHeight, spriteWidth, spriteHeight, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 
-    // speed definition
-    if(gameFrame % staggerFrames === 0){
-        //sprite loop
-        const frameLimit = 6
-        if(frameX < frameLimit) frameX++ 
-        else frameX=0
+    // // speed definition
+    // if(gameFrame % staggerFrames === 0){
+    //     //sprite loop
+    //     const frameLimit = 6
+    //     if(frameX < frameLimit) frameX++ 
+    //     else frameX=0
 
-    }
+    // }
+
+
     
     gameFrame++
 
